@@ -7,3 +7,5 @@
 Настоящий вход Google и обмен между физическим телефоном и ПК проверяются с вашим проектом, аккаунтом и разрешениями. Интерфейс русский. Перед сборкой Android нужно заменить папку-заглушку на свою.
 
 Публичная версия проверена03.11.2026:41 тест Node и41 JVM-тест прошли; lint и сборка Android успешны.
+
+Public Windows packaged playback/settings smoke test passed on2026-11-03; empty bundled metadata and original neutral icon verified.

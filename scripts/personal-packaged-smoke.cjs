@@ -19,7 +19,7 @@ async function freePort(){const server=net.createServer();await new Promise(r=>s
   let ready=false;for(let i=0;i<100&&!ready;i++){try{ready=await evaluate("document.readyState==='complete'&&!!document.querySelector('#connect-drive')&&!!window.personal")}catch{}if(!ready)await delay(100)}if(!ready)throw Error('Personal UI did not finish loading');await delay(300);
   const checks=async()=>{
    const expect=(value,message)=>{if(!value)throw Error(message)},$=s=>document.querySelector(s),wait=ms=>new Promise(r=>setTimeout(r,ms));
-   const edition=await personal.call('bookDetails',{title:'Возвышение Хоруса (с звуковым оформлением)',author:'Дэн Абнетт'});expect(edition?.description?.includes('Хорус'),'Packaged edition synopsis failed');const status=await personal.call('status');expect(!status.drive.connected&&!status.drive.configured,'Isolated profile unexpectedly authenticated');
+   const status=await personal.call('status');expect(!status.drive.connected&&!status.drive.configured,'Isolated profile unexpectedly authenticated');
    expect(!document.querySelector('iframe')&&!document.querySelector('[data-view="books"]'),'Old external player still present');
    document.querySelector('[data-view="drive"]').click();expect($('#connect-drive').disabled,'Google login should require OAuth client JSON');
    expect(!$('#discover')&&!document.querySelector('[data-view="discover"]'),'External discovery remains');

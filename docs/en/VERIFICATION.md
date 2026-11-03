@@ -7,3 +7,5 @@ The private predecessor passed99 Node tests and41 JVM tests plus desktop and emu
 Real Google authorization and physical-phone↔PC cloud exchange require your own project/account/consent and remain a manual integration check. The app UI is Russian. Public Android builds start with a placeholder folder until configured.
 
 Public export verification (2026-11-03):41 Node tests passed;41 Android JVM tests passed; Android lint and debug assembly succeeded.
+
+Public Windows packaged playback/settings smoke test passed on2026-11-03; empty bundled metadata and original neutral icon verified.
