@@ -1,0 +1,4 @@
+const base=require('./book-metadata'),information=require('./book-info.json'),synopses=require('./book-synopses.json'),{canonicalTitle}=require('./book-identity');
+const key=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/ё/g,'е').replace(/[^а-яa-z0-9]/g,'');
+function enrich(track,path){const item=base.enrich(track,path),canonical=canonicalTitle(item.title||item.name),id=key(canonical),info={...(information[id]||{}),...(synopses[id]||{})};if(!info.title&&!info.description&&!info.author)return item;return {...item,kind:'book',author:info.author||item.author||'',artist:info.author||item.artist,description:info.description||item.description||'',descriptionType:info.descriptionType||item.descriptionType||'',metadataSource:info.source||item.metadataSource||'',year:info.year||item.year||'',cover:base.coverFor(canonical)};}
+module.exports={enrich};

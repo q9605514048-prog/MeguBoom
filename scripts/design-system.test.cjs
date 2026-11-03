@@ -1,0 +1,6 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),icons=require('../ui-icons');
+const css=fs.readFileSync(require('node:path').join(__dirname,'../design-system.css'),'utf8');
+const colors=Object.fromEntries([...css.matchAll(/--([\w-]+):\s*(#[a-f\d]{6})/ig)].map(m=>[m[1],m[2]]));
+const luminance=h=>{const v=h.slice(1).match(/../g).map(x=>parseInt(x,16)/255).map(x=>x<=.04045?x/12.92:((x+.055)/1.055)**2.4);return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+test('shared default text pairs and primary button pass AA normal-text contrast',()=>{for(const [a,b]of [['text','ink-950'],['text-secondary','wine-800'],['text-muted','wine-800'],['on-accent','ember'],['gold','wine-800'],['success','wine-800']]){const x=luminance(colors[a]),y=luminance(colors[b]);assert.ok((Math.max(x,y)+.05)/(Math.min(x,y)+.05)>=4.5,a+'/'+b);}});
+test('shared icons never interpolate untrusted names or size attributes',()=>{const html=icons.icon('<img src=x onerror=alert(1)>','24 onload=alert(1)');assert.ok(html.includes('aria-hidden="true"'));assert.ok(html.includes('width="20"'));assert.ok(!html.includes('onerror')&&!html.includes('onload'));assert.ok(icons.names.includes('queue')&&icons.names.includes('headphones'));});

@@ -1,0 +1,10 @@
+'use strict';
+const MAX_BYTES=2*1024*1024,MAX_ENTRIES=20000;
+const validId=id=>typeof id==='string'&&/^[a-zA-Z0-9_-]{1,200}$/.test(id)&&!['__proto__','constructor','prototype'].includes(id);
+const validDevice=id=>typeof id==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/.test(id);
+function validate(value){if(!value||typeof value!=='object'||!Number.isSafeInteger(value.positionMs)||value.positionMs<0||!Number.isSafeInteger(value.durationMs)||value.durationMs<0||!Number.isSafeInteger(value.updatedAt)||value.updatedAt<1||typeof value.completed!=='boolean'||!validDevice(value.deviceId))throw Error('Некорректная запись прогресса');return {positionMs:value.positionMs,durationMs:value.durationMs,completed:value.completed,updatedAt:value.updatedAt,deviceId:value.deviceId}}
+function entries(input){if(!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).length>MAX_ENTRIES)throw Error('Некорректный список прогресса');const result={};for(const [id,value]of Object.entries(input)){if(!validId(id))throw Error('Некорректный ID записи');result[id]=validate(value)}return result}
+function parseDocument(text){if(typeof text!=='string'||Buffer.byteLength(text)>MAX_BYTES)throw Error('Слишком большой файл прогресса');const data=JSON.parse(text);if(data.version!==1||!validDevice(data.deviceId))throw Error('Неподдерживаемый формат прогресса');return {version:1,deviceId:data.deviceId,entries:entries(data.entries)}}
+function mergeEntries(...sources){const merged={};for(const source of sources)for(const [id,value]of Object.entries(entries(source))){const prev=merged[id];if(!prev||value.updatedAt>prev.updatedAt||value.updatedAt===prev.updatedAt&&value.deviceId>prev.deviceId)merged[id]={...value}}if(Object.keys(merged).length>MAX_ENTRIES)throw Error('Слишком много записей прогресса');return merged}
+function record(input,deviceId,updatedAt){if(!validId(input?.fileId))throw Error('Некорректный ID файла');return validate({...input,deviceId,updatedAt})}
+module.exports={MAX_BYTES,MAX_ENTRIES,validId,validDevice,validate,entries,parseDocument,mergeEntries,record};

@@ -1,0 +1,12 @@
+(function(root){
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const icon=(n,size=20)=>root.uiIcons?.icon(n,size)||'';
+ const time=n=>root.playerUtils?.formatTime(n)||'—';
+ function progress(t,position=0){const duration=Number(t.duration)||0,p=Math.min(100,Math.max(0,duration?position/duration*100:0));return {position,duration,percent:p,label:duration?Math.round(p)+'% · '+time(position)+' / '+time(duration):position?time(position)+' прослушано':'Ещё не слушали'}}
+ function meter(t,position){const p=progress(t,position);return '<div class="listening-progress"><progress class="meter" aria-label="Прослушано" value="'+p.percent+'" max="100"></progress><small>'+esc(p.label)+'</small></div>'}
+ function continueCard(t,position,art){return '<article class="continue-card" data-track="'+esc(t.id)+'"><button class="continue-cover" data-details="'+esc(t.id)+'" aria-label="Открыть '+esc(t.title)+'">'+art(t)+'</button><div class="continue-info"><p class="eyebrow">'+(t.kind==='book'?'АУДИОКНИГА':'МУЗЫКА')+'</p><b title="'+esc(t.title)+'">'+esc(t.title)+'</b><small>'+esc(t.kind==='book'?(t.author||'Автор не указан'):t.artist)+'</small>'+meter(t,position)+'<button class="primary" data-play="'+esc(t.id)+'">'+icon('play',16)+' Продолжить</button></div></article>'}
+ function breadcrumbs(scope,path){const parts=path.split('\\').filter(Boolean);return '<nav class="folder-location" aria-label="Путь папки"><button data-folder-scope="'+scope+'" data-folder-path="">'+icon('library',16)+' Библиотека</button>'+parts.map((part,i)=>icon('chevron',14)+'<button data-folder-scope="'+scope+'" data-folder-path="'+esc(parts.slice(0,i+1).join('\\'))+'">'+esc(part)+'</button>').join('')+'</nav>'}
+ function folder(folder,scope,kind){return '<button class="folder-entry" data-folder-scope="'+scope+'" data-folder-path="'+esc(folder.path)+'"><span class="folder-symbol">'+(root.categoryIcons?.markup(folder.path,kind)||icon('folder',25))+'</span><b>'+esc(folder.name)+'</b><small>'+folder.count+' '+(kind==='music'?'записей':'файлов')+'</small>'+icon('chevron',18)+'</button>'}
+ function recent(items){return [...items].filter(t=>Date.parse(t.addedAt||t.modifiedTime||'')).sort((a,b)=>Date.parse(b.addedAt||b.modifiedTime)-Date.parse(a.addedAt||a.modifiedTime))}
+ root.desktopUI={esc,icon,progress,meter,continueCard,breadcrumbs,folder,recent};
+})(typeof window==='undefined'?globalThis:window);

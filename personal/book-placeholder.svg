@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 768">
+ <defs><linearGradient id="g" x2="0" y2="1"><stop stop-color="#24151b"/><stop offset="1" stop-color="#09070a"/></linearGradient><radialGradient id="r"><stop stop-color="#8f2435" stop-opacity=".75"/><stop offset="1" stop-color="#130c10" stop-opacity="0"/></radialGradient></defs>
+ <rect width="512" height="768" rx="18" fill="url(#g)"/>
+ <rect x="18" y="18" width="476" height="732" rx="12" fill="none" stroke="#caa45b" stroke-width="3"/>
+ <circle cx="256" cy="315" r="205" fill="url(#r)"/>
+ <path d="M256 150l32 94 99 3-78 60 28 96-81-55-81 55 28-96-78-60 99-3z" fill="none" stroke="#d8b66e" stroke-width="10"/>
+ <path d="M174 443h164v12H174zm24 28h116v6H198z" fill="#8d2638"/>
+ <text x="256" y="565" text-anchor="middle" fill="#e8d6a2" font-family="Georgia,serif" font-size="62" font-weight="700">BOOK</text>
+ <text x="256" y="620" text-anchor="middle" fill="#a98a52" font-family="Georgia,serif" font-size="22" letter-spacing="7">AUDIOBOOK</text>
+ <text x="256" y="704" text-anchor="middle" fill="#795e3e" font-family="Arial,sans-serif" font-size="18">MEGUBOOM LIBRARY</text>
+</svg>

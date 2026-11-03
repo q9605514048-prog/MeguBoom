@@ -1,0 +1,4 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const phone=require('./phone-model.js');
+test('phone only exposes native verified folder records and aliases',()=>{const allowed={id:'drive-abc',fileId:'abc',storage:'drive',allowedRoot:phone.ROOT};assert.equal(phone.allowed(allowed),true);assert.equal(phone.allowed({...allowed,allowedRoot:''}),false);assert.equal(phone.allowed({id:'local-abc',storage:'local',parentIds:[allowed.allowedRoot]}),false);assert.equal(phone.allowed({...allowed,id:'download-drive-abc',storage:'local',downloadOf:'drive-abc'}),true);});
+test('remote projection removes completion and projects millisecond resume without title matches',()=>{const p=phone.project({entries:{'drive-abc':{positionMs:1234,durationMs:9000,completed:false}}},['drive-abc']);assert.deepEqual(p.positions,{'drive-abc':{position:1234,duration:9000}});assert.deepEqual(p.completed,[]);});

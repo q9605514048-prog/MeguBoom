@@ -1,0 +1,30 @@
+/* MeguBoom Explosion: shared primitives, semantic roles and interaction tokens. */
+:root {
+ color-scheme:dark;
+ --ink-950:#100d10;--ink-900:#191418;--wine-800:#251a20;--wine-700:#34232c;
+ --ember:#c53552;--flame:#ed7959;--gold:#edc37a;--text:#f8f0e9;--text-secondary:#c1aeb8;--text-muted:#a18e99;
+ --line:#44313b;--danger:#ff9c9c;--success:#a7d4bb;--control:#21191e;--focus:#f5d491;
+ --bg:var(--ink-950);--panel:var(--ink-900);--raised:var(--wine-800);--accent:var(--ember);--muted:var(--text-secondary);
+ --on-accent:#fff9f5;--on-gold:var(--ink-950);--overlay:rgb(8 5 8 / .82);--glow:rgb(217 67 95 / .18);
+ --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;
+ --radius-xs:4px;--radius-sm:8px;--radius-md:12px;--radius-lg:20px;--radius-round:999px;
+ --font-body:'Segoe UI',system-ui,sans-serif;--font-display:var(--font-body);--text-xs:12px;--text-sm:13px;--text-md:15px;--text-lg:18px;--text-xl:24px;--text-2xl:32px;--text-3xl:40px;
+ --duration-fast:120ms;--duration-normal:180ms;--duration-dialog:240ms;--ease-out:cubic-bezier(.23,1,.32,1);
+ --icon-sm:16px;--icon-md:20px;--icon-lg:24px;--icon-xl:32px;
+ --elevation-dialog:0 24px 64px rgb(0 0 0 / .5);--elevation-menu:0 8px 32px rgb(0 0 0 / .4);
+ --sidebar-width:224px;--player-height:100px;--touch-target:48px;--bottom-nav-height:64px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;accent-color:var(--ember)}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button,a,input,select,textarea,summary{-webkit-tap-highlight-color:transparent}
+button{touch-action:manipulation}
+button:not(:disabled),select,summary{cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+[hidden]{display:none!important}
+.ui-icon{display:inline-block;flex:none;vertical-align:middle;pointer-events:none}
+.tabular{font-variant-numeric:tabular-nums}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

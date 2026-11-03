@@ -1,0 +1,79 @@
+{
+  "name": "meguboom-desktop",
+  "version": "0.6.1",
+  "author": "MeguBoom",
+  "description": "MeguBoom desktop music and audiobook player",
+  "main": "desktop.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "node server.js",
+    "build:win": "electron-builder --win nsis && powershell -NoProfile -File scripts/retain-builds.ps1",
+    "test": "node --test scripts/*.test.cjs mobile/*.test.cjs",
+    "stage:android": "node scripts/stage-android.cjs",
+    "configure:drive": "node scripts/configure-drive-folder.cjs"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "ru.meguboom.desktop",
+    "productName": "MeguBoom",
+    "artifactName": "MeguBoom-Public-Setup-${version}.${ext}",
+    "files": [
+      "desktop.js",
+      "desktop-preload.js",
+      "server.js",
+      "startup.js",
+      "index.html",
+      "personal-app.js",
+      "personal.css",
+      "personal-model.js",
+      "player-utils.js",
+      "queue-utils.js",
+      "local-library.js",
+      "manifest.webmanifest",
+      "personal/drive-auth.js",
+      "personal/drive.js",
+      "personal/book-metadata.js",
+      "personal/book-covers.json",
+      "personal/book-info.json",
+      "personal/book-synopses.json",
+      "personal/book-descriptions.js",
+      "personal/book-placeholder.svg",
+      "personal/local-library.js",
+      "personal/media-server.js",
+      "personal/desktop-service.js",
+      "assets/app-icon.png",
+      "assets/app-icon.ico",
+      "category-icons.js",
+      "assets/icons/**",
+      "personal/book-identity.js",
+      "personal/desktop-book-metadata.js",
+      "personal/drive-identity.json",
+      "design-system.css",
+      "ui-icons.js",
+      "desktop-ui.js",
+      "personal/collections.js",
+      "personal/progress-records.js",
+      "personal/progress-sync.js"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/app-icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
